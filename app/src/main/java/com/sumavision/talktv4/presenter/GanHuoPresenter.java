@@ -13,9 +13,6 @@ public class GanHuoPresenter extends BasePresenter<IBaseView> {
 
     @Override
     public void release() {
-        if (subscription != null) {
-            subscription.unsubscribe();
-        }
 
     }
 }
