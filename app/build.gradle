@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.sumavision.talktv4"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile rootProject.ext.libJunit
+    //supportLib
+    compile rootProject.ext.supportLibAppCompat
+    compile rootProject.ext.supportLib
+    compile rootProject.ext.supportLibDesign
+    compile rootProject.ext.supportLibRecyclerview
+    compile rootProject.ext.supportLibCardview
+
+    compile rootProject.ext.libRetrofit
+    compile rootProject.ext.libRetrofitConverterGson
+    compile rootProject.ext.libRetrofitAdapterRxJava
+
+    debugCompile rootProject.ext.libDebugLeakBird
+    releaseCompile rootProject.ext.libReleaseLeakBird
+    testCompile rootProject.ext.libTestLeakBird
+
+    compile rootProject.ext.libOkHttp
+    compile rootProject.ext.libGlide
+    compile rootProject.ext.libStetho
+    compile rootProject.ext.libStethoOkhttp
+    compile rootProject.ext.libJlog
+    compile rootProject.ext.libButterknife
+    compile rootProject.ext.libGson
+    compile rootProject.ext.libRxJava
+    compile rootProject.ext.libRxAndroid
+    compile rootProject.ext.libRxLifecycle
+    compile rootProject.ext.libRxLifecycleComponents
+    compile rootProject.ext.libPhotoView
+    compile rootProject.ext.libMultidex
+    compile rootProject.ext.libJackson
+    compile rootProject.ext.libOrmliteCore
+    compile rootProject.ext.libOrmliteAndroid
+    compile rootProject.ext.libNumberProgressBar
+}
