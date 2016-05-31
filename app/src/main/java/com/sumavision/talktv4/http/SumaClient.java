@@ -1,8 +1,11 @@
 package com.sumavision.talktv4.http;
 
+import android.util.Log;
+
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jiongbull.jlog.JLog;
 import com.sumavision.talktv4.BaseApp;
 import com.sumavision.talktv4.http.interceptor.HttpCacheInterceptor;
 import com.sumavision.talktv4.http.interceptor.LoggingInterceptor;
@@ -13,6 +16,7 @@ import com.sumavision.talktv4.util.NetworkUtil;
 import java.io.File;
 import java.io.FilterInputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -23,6 +27,7 @@ import okhttp3.internal.DiskLruCache;
 import okhttp3.internal.io.FileSystem;
 import okio.BufferedSource;
 import okio.Okio;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -37,7 +42,7 @@ import rx.schedulers.Schedulers;
  *  @author  yangjh
  *  created at  16-5-23 上午10:50
  */
-public class SumaClient {
+public class SumaClient<E extends BaseData>{
     public static final String HOST = "http://172.16.40.88:81";
     private static Object sumaRetrofit;
     protected static final Object monitor = new Object();
@@ -103,8 +108,21 @@ public class SumaClient {
                         @Override
                         public void call(Throwable throwable) {
                             if(throwable.toString().contains("HTTP 304 Not Modified")){
-                                String ss = getCacheContent();
-                                T t = (T) new Gson().fromJson(ss,cls);
+                                Field[] fields = throwable.getClass().getDeclaredFields();
+                                String url = "";
+                                for(Field field : fields){
+                                    field.setAccessible(true);
+                                    if(field.getName().equalsIgnoreCase("response")){
+                                        try {
+                                            Response res = (Response) field.get(throwable);
+                                            url = res.raw().request().url().toString();
+                                            break;
+                                        } catch (IllegalAccessException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                                T t = (T) new Gson().fromJson(getCacheContent(url),cls);
                                 t.setCacheSource(true);
                                 action.call(t);
                             }else{
@@ -118,8 +136,8 @@ public class SumaClient {
         return subscription;
     }
 
-    public static String getCacheContent(){
-        String path = "http://172.16.40.88:81/json/update.json";
+    public static String getCacheContent(String url){
+        String path = url;
         Scanner sc = null;
         try {
             sc = new Scanner(getFromCache(path));
@@ -141,7 +159,7 @@ public class SumaClient {
 
 
     public static FilterInputStream getFromCache(String url) throws Exception {
-         DiskLruCache cache = DiskLruCache.create(FileSystem.SYSTEM, cacheFile,
+        DiskLruCache cache = DiskLruCache.create(FileSystem.SYSTEM, cacheFile,
                 201105, 2, 1024 * 1024 * 100);
         cache.flush();
         String key = CryptTool.md5Digest(url);
