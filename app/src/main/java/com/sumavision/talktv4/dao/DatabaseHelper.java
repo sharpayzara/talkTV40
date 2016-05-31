@@ -3,6 +3,7 @@ package com.sumavision.talktv4.dao;
 import android.content.Context;
 
 import com.sumavision.talktv4.dao.ormlite.OrmLiteDatabaseHelper;
+import com.sumavision.talktv4.model.entity.HttpCache;
 
 /**
  *  desc  ormlite操作数据库Helper
@@ -24,6 +25,7 @@ public class DatabaseHelper extends OrmLiteDatabaseHelper {
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        addTable();
     }
 
     public static DatabaseHelper getInstance(Context context) {
@@ -40,5 +42,7 @@ public class DatabaseHelper extends OrmLiteDatabaseHelper {
     /**
      * 注册数据表
      */
-
+    private void addTable() {
+        registerTable(HttpCache.class);
+    }
 }

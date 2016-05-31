@@ -53,4 +53,11 @@
         \n\n数据来源: 干货集中营 http://gank.io/api</string>
     <string name="thank_content"><b>daimajia</b>\n干货集中营 : http://gank.io\n\n<b>drakeet</b>\n妹纸&#038;gank·io : https://github.com/drakeet/Meizhi\n\n<b>maoruibin</b>\nGankDaily : https://github.com/maoruibin/GankDaily</string>
     <string name="open_source_libraries_list">com.jakewharton:butterknife:7.0.1\ncom.commit451:PhotoView:1.2.5</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_drag_setting_activity_drag_setting">
+        DragSettingActivityDragSettingActivity
+    </string>
+    <string name="title_activity_drag_setting">DragSettingActivity</string>
 </resources>

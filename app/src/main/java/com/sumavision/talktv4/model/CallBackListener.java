@@ -1,7 +1,5 @@
 package com.sumavision.talktv4.model;
 
-import com.sumavision.talktv4.ui.iview.base.IBaseView;
-
 /**
  * Created by sharpay on 16-5-26.
  */

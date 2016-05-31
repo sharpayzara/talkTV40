@@ -7,6 +7,15 @@ import java.io.Serializable;
  */
 public class BaseData implements Serializable{
     public boolean error;
+    public boolean isCacheSource = false;
+
+    public boolean isCacheSource() {
+        return isCacheSource;
+    }
+
+    public void setCacheSource(boolean cacheSource) {
+        isCacheSource = cacheSource;
+    }
 
     @Override
     public String toString() {

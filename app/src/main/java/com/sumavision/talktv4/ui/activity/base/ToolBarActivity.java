@@ -15,7 +15,7 @@ import butterknife.Bind;
  * 带Toolbar的基础Activity
  * Created by dell on 2016/4/15.
  */
-public abstract class ToolBarActivity<T extends BasePresenter> extends BaseActivity {
+public abstract class ToolBarActivity<T extends BasePresenter> extends BaseActivity<T> {
     protected ActionBar actionBar;
     protected boolean isToolBarHiding = false;
 

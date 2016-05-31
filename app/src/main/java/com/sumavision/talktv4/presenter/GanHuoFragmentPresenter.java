@@ -7,15 +7,15 @@ import com.sumavision.talktv4.model.GankModel;
 import com.sumavision.talktv4.model.entity.decor.GanHuoData;
 import com.sumavision.talktv4.model.impl.GankModelmpl;
 import com.sumavision.talktv4.presenter.base.BasePresenter;
-import com.sumavision.talktv4.ui.iview.IGanHuoView;
+import com.sumavision.talktv4.ui.iview.IGanHuoFragmentView;
 
 /**
  * Created by sharpay on 16-5-24.
  */
-public class GanHuoFragmentPresenter extends BasePresenter<IGanHuoView> {
+public class GanHuoFragmentPresenter extends BasePresenter<IGanHuoFragmentView> {
     GankModel model;
 
-    public GanHuoFragmentPresenter(Context context, IGanHuoView iView) {
+    public GanHuoFragmentPresenter(Context context, IGanHuoFragmentView iView) {
         super(context, iView);
         model = new GankModelmpl();
     }
@@ -26,23 +26,22 @@ public class GanHuoFragmentPresenter extends BasePresenter<IGanHuoView> {
     }
 
     public void loadGank(final String type, final int page){
-     model.loadGanks(type, page, new CallBackListener<GanHuoData>() {
-         @Override
-         public void onSuccess(GanHuoData ganHuoData) {
-             iView.hideProgressBar();
-             if (ganHuoData.results.size() == 0){
-                 iView.showNoMoreData();
-             }else {
-                 iView.showListView(ganHuoData.results);
-             }
-         }
+        model.loadGanks(type, page, new CallBackListener<GanHuoData>() {
+            @Override
+            public void onSuccess(GanHuoData ganHuoData) {
+                iView.hideProgressBar();
+                if (ganHuoData.results.size() == 0) {
+                    iView.showNoMoreData();
+                } else {
+                    iView.showListView(ganHuoData.results);
+                }
+            }
 
-         @Override
-         public void onFailure(Throwable throwable) {
-             iView.hideProgressBar();
-             iView.showErrorView();
-         }
-     });
+            @Override
+            public void onFailure(Throwable throwable) {
+                iView.hideProgressBar();
+                iView.showErrorView();
+            }
+        });
     }
-
 }

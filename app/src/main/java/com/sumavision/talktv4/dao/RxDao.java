@@ -11,6 +11,7 @@ import com.sumavision.talktv4.util.JSONUtil;
 import com.sumavision.talktv4.util.RxUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import rx.Observable;
@@ -184,6 +185,36 @@ public class RxDao<T> extends OrmLiteDao<T> {
         return observable;
     }
 
+    @Override
+    public boolean update(T t){
+        boolean result = super.update(t);
+        if (result) {
+            DbCache.getInstance().clearByTable(tableName);
+        }
+        return result;
+    }
+
+
+    /**
+     * 根据查询条件查询记录
+     * @param map 查询条件
+     * @return 查询结果
+     */
+    public List<T> queryByCondition(Map<String, Object> map){
+        if (!cache) {
+            return super.queryForAll();
+        }
+        String json = DbCache.getInstance().getCache(tableName, map.toString());
+        List<T> result = JSONUtil.toCollection(json, List.class, clazz);
+        if (result != null) {
+            JLog.d("---------query from cache--");
+            return result;
+        }
+        result = super.queryByColumnName(map);
+        DbCache.getInstance().addCache(tableName, map.toString(), result);
+        return result;
+
+    }
     public List<T> queryForAll() {
         if (!cache) {
             return super.queryForAll();

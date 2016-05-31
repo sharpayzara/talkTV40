@@ -4,8 +4,6 @@ import android.content.Context;
 
 import com.sumavision.talktv4.ui.iview.base.IBaseView;
 
-import rx.Subscription;
-
 /**
  *  desc  Presenter基类
  *  @author  yangjh
@@ -26,4 +24,5 @@ public abstract class BasePresenter<T extends IBaseView>  {
     }
 
     public abstract void release();
+
 }

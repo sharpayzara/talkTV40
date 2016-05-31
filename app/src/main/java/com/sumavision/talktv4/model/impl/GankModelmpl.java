@@ -1,6 +1,7 @@
 package com.sumavision.talktv4.model.impl;
 
 import com.sumavision.talktv4.http.SumaClient;
+import com.sumavision.talktv4.http.HomeRetrofit;
 import com.sumavision.talktv4.model.CallBackListener;
 import com.sumavision.talktv4.model.GankModel;
 import com.sumavision.talktv4.model.entity.decor.GanHuoData;
@@ -21,7 +22,7 @@ public class GankModelmpl  implements GankModel{
          subscription = SumaClient.subscribe(new Callable<Observable<GanHuoData>>() {
             @Override
             public Observable<GanHuoData> call() {
-                return SumaClient.getRetrofitInstance().getGanHuoData(SumaClient.getCacheControl(),type,page);
+                return SumaClient.getRetrofitInstance(HomeRetrofit.class).getGanHuoData(SumaClient.getCacheControl(),type,page);
             }
         }, new Action1<GanHuoData>() {
             @Override
@@ -33,7 +34,7 @@ public class GankModelmpl  implements GankModel{
             public void call(Throwable throwable) {
                 listener.onFailure(throwable);
             }
-        });
+        },GanHuoData.class);
     }
 
     @Override

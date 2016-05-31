@@ -1,6 +1,7 @@
 package com.sumavision.talktv4.model.entity.decor;
 
 
+import com.google.gson.annotations.SerializedName;
 import com.sumavision.talktv4.model.entity.Gank;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
  * Created by xybcoder on 2016/3/1.
  */
 public class FunnyData extends BaseData{
+
+    @SerializedName("result")
     public List<Gank> results;
 
     @Override

@@ -255,7 +255,6 @@ public class OrmLiteDao<T> {
             list = ormLiteDao.queryForFieldValuesArgs(map);
         } catch (SQLException e) {
             JLog.e("", e);
-            ;
         }
         return list;
     }
